@@ -1,0 +1,35 @@
+﻿@model Pessoa
+@using GerenciamentoDePessoas.Models
+
+@{
+    ViewData["Title"] = "Excluir";
+}
+
+
+@if (TempData["MensagemErroBusca"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemErroBusca"]
+    </div>
+}
+
+
+<h3>Excluir Pessoa</h3>
+
+<form  method="post">
+    <input type="hidden" name="id" asp-for="Id" />
+    <div class="alert alert-warning" role="alert">
+        Tem certeza que deseja excluir a pessoa <strong>@Model.Nome</strong>?
+    </div>
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" asp-for="Nome" class="form-control" id="nome" readonly>
+    </div>
+    <button type="submit" class="btn btn-danger">Excluir</button>
+    <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+</form>
+
+
+
+
+

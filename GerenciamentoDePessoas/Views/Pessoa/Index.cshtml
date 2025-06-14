@@ -1,0 +1,119 @@
+﻿@model List<Pessoa>
+
+@{
+    ViewData["Description"] = "Aqui você pode visualizar, editar e excluir pessoas cadastradas.";
+}
+@{
+    ViewData["Keywords"] = "pessoas, cadastro, lista, editar, excluir";
+}
+@{
+    ViewData["Author"] = "Bruno Silva";
+}
+@{
+    ViewData["Robots"] = "index, follow";
+}
+
+@{
+    ViewData["Title"] = "Pessoas";
+}
+
+@if (TempData["MensagemSucesso"] != null)
+{
+    <div>
+        <div class="alert alert-success">@TempData["MensagemSucesso"]</div> :
+    </div>
+}
+
+@if (TempData["MensagemErroBusca"] != null)
+{
+    <div>
+        <div class="alert alert-danger">@TempData["MensagemErroBusca"]</div> :
+    </div>
+}
+
+
+<p>
+    <a asp-controller="Pessoa" asp-action="Criar" class="btn btn-primary">Criar Nova Pessoa</a>
+</p>
+<table class="table table-striped tabela-pessoas">
+    <thead>
+        <tr>            
+            <th>Nome</th>
+            <th>Sobrenome</th>
+            <th>CPF</th>
+            <th>Tipo Sanguineo</th>
+            <th>Email</th>
+            <th>Data de Nascimento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pessoa in Model)
+        {
+            <tr>
+                <td>@pessoa.Nome</td>
+                <td>@pessoa.Sobrenome</td>
+                <td>@pessoa.CPF</td>
+                <td>@pessoa.TipoSanguineo</td>
+                <td>@pessoa.Email</td>
+                <td>@pessoa.DataNascimento.ToString("dd/MM/yyyy")</td>                
+                <td>
+                    <a asp-action="Editar" asp-route-id="@pessoa.Id" class="btn btn-warning">Editar</a>
+                    <a title="Excluir" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#ModalExcluir_@pessoa.Id">Excluir</a>
+                    <a title="Detalhes" class="btn btn-info" data-bs-toggle="modal" data-bs-target="#Modal_@pessoa.Id">Detalhes</a>
+                </td>
+            </tr>
+            <!-- Modal -->
+            <div class="modal fade" id="Modal_@pessoa.Id" tabindex="-1" aria-labelledby="ModalLabel_@pessoa.Id" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalLabel_@pessoa.Id">Detalhes: @pessoa.Nome</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-center">Nome: @pessoa.Nome</p>
+                            <p class="text-center">Nome: @pessoa.Sobrenome</p>
+                            <p class="text-center">Nome: @pessoa.CPF</p>
+                            <p class="text-center">Nome: @pessoa.TipoSanguineo</p>
+                            <p class="text-center">Nome: @pessoa.Email</p>
+                            <p class="text-center">Nome: @pessoa.DataNascimento</p>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Modal Excluir-->
+            <div class="modal fade" id="ModalExcluir_@pessoa.Id" tabindex="-1" aria-labelledby="ModalExcluirLabel_@pessoa.Id" aria-hidden="true">
+                <div class="modal-dialog">  
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="ModalExcluirLabel_@pessoa.Id">Detalhes: @pessoa.Nome</h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-center">Deseja excluir a pessoa: @pessoa.Nome @pessoa.Sobrenome</p>
+                            <h5 class="text-danger text-center">Está ação não pode ser desfeita após a confirmação!</h5>               
+                        </div>                        
+                        <div class="modal-footer">
+                        <form method="post" asp-action="Excluir" asp-controller="Pessoa" asp-route-id="@pessoa.Id">
+                            <input type="hidden" name="id" value="@pessoa.Id" />
+                            <button type="submit" class="btn btn-danger">Excluir</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                        </form>
+                 </div>
+            
+            </div>
+    </div>
+            </div>
+        }
+    </tbody>
+</table>
+<p>
+    <a asp-action="Index" asp-controller="Home" class="btn btn-secondary">Voltar</a>
+</p>
+

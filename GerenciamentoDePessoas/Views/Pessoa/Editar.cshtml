@@ -1,0 +1,135 @@
+﻿@model Pessoa
+@using GerenciamentoDePessoas.Models
+@using GerenciamentoDePessoas.Models.Enum
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+@if (TempData["Erro"] != null)
+{
+    <div class="alert alert-danger" role="alert">
+        @TempData["MensagemErroBusca"]
+    </div>
+}
+
+<div class="container d-flex justify-content-center">
+    <form class="w-100" style="max-width: 700px;" asp-action="Editar" asp-controller="Pessoa" asp-route-id="@Model.Id" method="post">
+        <input type="hidden" name="id" asp-for="Id" />
+        <div class="col-md-6">
+            <label for="nome" class="form-label">Nome</label>
+            <span asp-validation-for="Nome" class="text-danger"></span>
+            <input type="text" asp-for="Nome" class="form-control" id="nome">
+        </div>
+        <div class="col-md-6">
+            <label for="sobrenome" class="form-label">Sobrenome</label>
+            <span asp-validation-for="Sobrenome" class="text-danger"></span>
+            <input type="text" asp-for="Sobrenome" class="form-control" id="sobrenome">
+        </div>
+        <div class="col-6">
+            <label for="cpf" class="form-label">CPF</label>
+            <input type="text" asp-for="CPF" class="form-control" id="cpf" placeholder="ex 999999999-99">
+            <span asp-validation-for="CPF" class="text-danger"></span>
+        </div>
+        <div class="col-6">
+            <label for="dataNascimento" class="form-label">Data Nascimento</label>
+            <span asp-validation-for="DataNascimento" class="text-danger"></span>
+            <input type="date" asp-for="DataNascimento" class="form-control" id="dataNascimento" placeholder="">
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Email</label>
+            <span asp-validation-for="Email" class="text-danger"></span>
+            <input type="email" asp-for="Email" class="form-control" id="email">
+        </div>
+        <div class="col-md-6">
+            <label for="tipoSanguineo" class="form-label">Tipo Sanguineo</label>
+            <select id="tipoSanguineo" asp-for="TipoSanguineo" class="form-select">
+                @foreach (var tipo in Enum.GetValues(typeof(ETipoSanguineo)))
+                {
+                    if (Model?.TipoSanguineo == (ETipoSanguineo)tipo)
+                    {
+                        <option selected value="@tipo">@tipo</option>
+                    }
+                    else
+                    {
+                        <option value="@tipo">@tipo</option>
+                    }
+                }
+
+            </select>
+            <span asp-validation-for="TipoSanguineo" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="text" asp-for="Telefone" class="form-control" id="telefone">
+            <span asp-validation-for="Telefone" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="endereco" class="form-label">Enedereço</label>
+            <input type="text" asp-for="Endereco" class="form-control" id="endereco">
+            <span asp-validation-for="Endereco" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" asp-for="Cidade" class="form-control" id="cidade">
+            <span asp-validation-for="Cidade" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="estado" class="form-label">Estado</label>
+            <select id="estado" asp-for="Estado" class="form-select">
+                <option selected>Selecione...</option>
+                <option>SP</option>
+                <option>AM</option>
+                <option>AC</option>
+                <option>AL</option>
+                <option>AP</option>
+                <option>BA</option>
+                <option>CE</option>
+                <option>DF</option>
+                <option>ES</option>
+                <option>GO</option>
+                <option>MA</option>
+                <option>MT</option>
+                <option>MS</option>
+                <option>MG</option>
+                <option>PA</option>
+                <option>PB</option>
+                <option>PR</option>
+                <option>PE</option>
+                <option>PI</option>
+                <option>RJ</option>
+                <option>RN</option>
+                <option>RS</option>
+                <option>RO</option>
+                <option>RR</option>
+                <option>SC</option>
+                <option>SE</option>
+                <option>TO</option>
+
+            </select>
+            <span asp-validation-for="Estado" class="text-danger"></span>
+        </div>
+        <div class="col-md-6">
+            <label for="email" class="form-label">Pais</label>
+            <input type="text" asp-for="Pais" class="form-control" id="pais">
+            <span asp-validation-for="Pais" class="text-danger"></span>
+        </div>
+        <br />
+        <div class="col-12">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
+        </div>
+    </form>
+</div>
+
+
+
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
